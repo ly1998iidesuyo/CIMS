@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>贫困信息 - 社区信息管理系统</title>
+<link rel="icon" href="favicon.ico" type="image/ico">
+
+
+<meta name="author" content="yinqi">
+<link href="css/bootstrap.min.css" th:href="@{~/css/bootstrap.min.css}" rel="stylesheet">
+<link href="css/materialdesignicons.min.css" th:href="@{~/css/materialdesignicons.min.css}" rel="stylesheet">
+<link href="css/style.css" th:href="@{~/css/style.css}" rel="stylesheet">
+</head>
+  
+<body data-logobg="color_8" data-sidebarbg="color_8">
+<div class="layout-web">
+  <div class="layout-container">
+
+    <!--左侧导航-->
+    <aside th:replace="commons/bar::#aside"></aside>
+
+    <!--头部信息-->
+    <header th:replace="commons/bar::#header"></header>
+    
+    <!--页面主要内容-->
+    <main class="layout-content">
+      
+      <div class="container-fluid">
+        
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-header"><h4>贫困信息</h4></div>
+              <div class="card-body">
+                <h5><a class="btn btn-success" href="emp" th:href="@{/poorhh}">贫困信息添加</a></h5>
+                <h5>
+                  <form class="form-horizontal" id="sform" method="get" th:action="@{/spoorhh}">
+                    <div class="form-group">
+                      <label class="col-xs-12" for="example-text-input">查询贫困信息</label>
+                      <div class="col-xs-4">
+                        <input class="form-control" type="text" id="stext" name="CimsPinkunId" placeholder="请输入贫困信息id..">
+                      </div>
+                      <button type="submit" id="sbtn" class="btn btn-info btn-sm">查询</button>
+                    </div>
+                  </form>
+                </h5>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>id</th>
+                      <th>户主姓名</th>
+                      <th>家庭年人均收入</th>
+                      <th>贫困原因</th>
+                      <th>编辑</th>
+                      <th>删除贫困户资格</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <tr th:each="poorhh:${poorhhs}">
+                    <td th:text="${poorhh.CimsPinkunId}"></td>
+                    <td th:text="${poorhh.getCimsHuji().getCimsHujiName()}"></td>
+                    <td th:text="${poorhh.CimsPinkunAvgyearincome}"></td>
+                    <td th:text="${poorhh.CimsPinkunReason}"></td>
+                    <td>
+                      <a class="btn btn-info btn-sm" th:href="@{/poorhh/}+${poorhh.CimsPinkunId}">编辑</a>
+                    </td>
+                    <td>
+                      <button class="btn btn-danger btn-sm DeleteBtn" type="submit" th:attr="del_uri=@{/poorhh/}+${poorhh.CimsPinkunId}">删除</button>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+                <form id="DeleteEmpForm" method="post">
+                  <input type="hidden" name="_method" value="delete">
+                </form>
+               </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
+    </main>
+    <!--End 页面主要内容-->
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery.min.js" th:src="@{~/js/jquery.min.js}"></script>
+<script type="text/javascript" src="js/bootstrap.min.js" th:src="@{~/js/bootstrap.min.js}"></script>
+<script type="text/javascript" src=".js/perfect-scrollbar.min.js" th:src="@{~/js/perfect-scrollbar.min.js}"></script>
+<script type="text/javascript" src="js/main.js" th:src="@{~/js/main.js}"></script>
+<script type="text/javascript">
+
+  $(".DeleteBtn").click(function () {
+
+      //修改表单地址，即给form添加属性，和上边的del button的th:attr，意义相同 例如xx.attr("action","/emp/id"),然后提交
+      $("#DeleteEmpForm").attr("action",$(this).attr("del_uri")).submit()
+      return false
+  })
+  $(function () {
+      $("#sform").submit(function () {
+
+          var a=$("#stext").val()
+          if(a==""){
+
+              alert("id不能为空！请重新输入")
+              return false
+          }
+          if(a!=""){
+              return true
+          }
+      })
+  })
+
+</script>
+</body>
+</html>

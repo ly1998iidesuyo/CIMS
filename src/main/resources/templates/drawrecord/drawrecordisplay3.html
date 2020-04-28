@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>低保领取信息 - 社区信息管理系统</title>
+<link rel="icon" href="favicon.ico" type="image/ico">
+
+
+<meta name="author" content="yinqi">
+<link href="css/bootstrap.min.css" th:href="@{~/css/bootstrap.min.css}" rel="stylesheet">
+<link href="css/materialdesignicons.min.css" th:href="@{~/css/materialdesignicons.min.css}" rel="stylesheet">
+<link href="css/style.css" th:href="@{~/css/style.css}" rel="stylesheet">
+</head>
+  
+<body data-logobg="color_8" data-sidebarbg="color_8">
+<div class="layout-web">
+  <div class="layout-container">
+
+    <!--左侧导航-->
+    <aside th:replace="commons/bar::#aside"></aside>
+
+    <!--头部信息-->
+    <header th:replace="commons/bar::#header"></header>
+    
+    <!--页面主要内容-->
+    <main class="layout-content">
+      
+      <div class="container-fluid">
+        
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-header"><h4>低保领取信息</h4></div>
+              <div class="card-body">
+                <h5><a class="btn btn-success" href="emp" th:href="@{/drawrecord}">为此户领取低保</a>
+                  <a class="btn btn-success" th:href="@{/drawrecords}">返回领取记录总览</a></h5>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>id</th>
+                      <th>户主姓名</th>
+                      <th>领取金额</th>
+                      <th>领取时间</th>
+                      <th>领取地点</th>
+                      <th>备注</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <tr th:each="drawrecord:${drawrecords}">
+                    <td th:text="${drawrecord.cimsPinkunjiluId}"></td>
+                    <td th:text="${drawrecord.getCimsPinkun().getCimsHuji().getCimsHujiName()}"></td>
+                    <td th:text="${drawrecord.cimsPinkunjiluMoney}"></td>
+                    <td th:text="${#dates.format(drawrecord.cimsPinkunjiluDate,'yyyy-MM-dd HH:mm')}"></td>
+                    <td th:text="${drawrecord.cimsPinkunjiluPlace}"></td>
+                    <td th:text="${drawrecord.cimsPinkunjiluRemarks}"></td>
+                  </tr>
+                  </tbody>
+                </table>
+                <form id="DeleteEmpForm" method="post">
+                  <input type="hidden" name="_method" value="delete">
+                </form>
+               </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
+    </main>
+    <!--End 页面主要内容-->
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery.min.js" th:src="@{~/js/jquery.min.js}"></script>
+<script type="text/javascript" src="js/bootstrap.min.js" th:src="@{~/js/bootstrap.min.js}"></script>
+<script type="text/javascript" src=".js/perfect-scrollbar.min.js" th:src="@{~/js/perfect-scrollbar.min.js}"></script>
+<script type="text/javascript" src="js/main.js" th:src="@{~/js/main.js}"></script>
+<script type="text/javascript">
+
+  $(".DeleteBtn").click(function () {
+
+      //修改表单地址，即给form添加属性，和上边的del button的th:attr，意义相同 例如xx.attr("action","/emp/id"),然后提交
+      $("#DeleteEmpForm").attr("action",$(this).attr("del_uri")).submit()
+      return false
+  })
+  $(function () {
+      $("#sform").submit(function () {
+
+          var a=$("#stext").val()
+          if(a==""){
+
+              alert("id不能为空！请重新输入")
+              return false
+          }
+          if(a!=""){
+              return true
+          }
+      })
+  })
+
+</script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>户籍信息 - 社区信息管理系统</title>
+<link rel="icon" href="favicon.ico" type="image/ico">
+
+
+<meta name="author" content="yinqi">
+<link href="css/bootstrap.min.css" th:href="@{~/css/bootstrap.min.css}" rel="stylesheet">
+<link href="css/materialdesignicons.min.css" th:href="@{~/css/materialdesignicons.min.css}" rel="stylesheet">
+<link href="css/style.css" th:href="@{~/css/style.css}" rel="stylesheet">
+</head>
+  
+<body data-logobg="color_8" data-sidebarbg="color_8">
+<div class="layout-web">
+  <div class="layout-container">
+
+    <!--左侧导航-->
+    <aside th:replace="commons/bar::#aside"></aside>
+
+    <!--头部信息-->
+    <header th:replace="commons/bar::#header"></header>
+    
+    <!--页面主要内容-->
+    <main class="layout-content">
+      
+      <div class="container-fluid">
+        
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-header"><h4>户籍信息</h4></div>
+              <div class="card-body">
+                <h5><a class="btn btn-success" href="emp" th:href="@{/hregister}">户籍信息添加</a></h5>
+                <h5>
+                  <form class="form-horizontal" id="sform" method="get" th:action="@{/hhregister}">
+                    <div class="form-group">
+                      <label class="col-xs-12" for="example-text-input">查询户籍信息</label>
+                      <div class="col-xs-4">
+                        <input class="form-control" type="text" id="stext" name="CimsHujiId" placeholder="请输入户籍id..">
+                      </div>
+                      <button type="submit" id="sbtn" class="btn btn-info btn-sm">查询</button>
+                    </div>
+                  </form>
+                </h5>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>id</th>
+                      <th>户主姓名</th>
+                      <th>社区名</th>
+                      <th>家庭人数</th>
+                      <th>籍贯</th>
+                      <th>联系方式</th>
+                      <th>住址</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <tr th:each="hhregister:${hhregisters}">
+                    <td th:text="${hhregister.CimsHujiId}"></td>
+                    <td th:text="${hhregister.CimsHujiName}"></td>
+                    <td th:text="${hhregister.getCimsShequ().getCimsShequName()}"></td>
+                    <td th:text="${hhregister.CimsHujiPersonnum}"></td>
+                    <td th:text="${hhregister.CimsHujiAdress}"></td>
+                    <td th:text="${hhregister.CimsHujiPhone}"></td>
+                    <td th:text="${hhregister.CimsHujiAdressnow}"></td>
+                    <td>
+                      <a class="btn btn-info btn-sm" th:href="@{/hregister/}+${hhregister.CimsHujiId}">编辑</a>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+                
+               </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
+    </main>
+    <!--End 页面主要内容-->
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery.min.js" th:src="@{~/js/jquery.min.js}"></script>
+<script type="text/javascript" src="js/bootstrap.min.js" th:src="@{~/js/bootstrap.min.js}"></script>
+<script type="text/javascript" src=".js/perfect-scrollbar.min.js" th:src="@{~/js/perfect-scrollbar.min.js}"></script>
+<script type="text/javascript" src="js/main.js" th:src="@{~/js/main.js}"></script>
+<script type="text/javascript">
+
+  $(".DeleteBtn").click(function () {
+
+      //修改表单地址，即给form添加属性，和上边的del button的th:attr，意义相同 例如xx.attr("action","/emp/id"),然后提交
+      $("#DeleteEmpForm").attr("action",$(this).attr("del_uri")).submit()
+      return false
+  })
+  $(function () {
+      $("#sform").submit(function () {
+
+          var a=$("#stext").val()
+          if(a==""){
+
+              alert("id不能为空！请重新输入")
+              return false
+          }
+          if(a!=""){
+              return true
+          }
+      })
+  })
+</script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+        <title>社区信息编辑 - 社区信息管理系统</title>
+        <link rel="icon" href="favicon.ico" type="image/ico">
+
+
+        <meta name="author" content="yinqi">
+        <link href="css/bootstrap.min.css" th:href="@{~/css/bootstrap.min.css}" rel="stylesheet">
+        <link href="css/materialdesignicons.min.css" th:href="@{~/css/materialdesignicons.min.css}" rel="stylesheet">
+        <link href="css/style.css" th:href="@{~/css/style.css}" rel="stylesheet">
+    </head>
+
+    <body data-logobg="color_8" data-sidebarbg="color_8">
+        <div class="layout-web">
+            <div class="layout-container">
+
+                <!--左侧导航-->
+                <aside th:replace="commons/bar::#aside"></aside>
+
+                <!--头部信息-->
+                <header th:replace="commons/bar::#header"></header>
+
+                <!--页面主要内容-->
+                <main class="layout-content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header"><h4 th:text="${community!=null}?'修改社区':'添加社区'">添加社区</h4></div>
+                                    <div class="card-body">
+
+                                        <form class="form-horizontal" action="#" id="sform" th:action="@{/community}" method="post" enctype="multipart/form-data">
+                                            <input type="hidden" name="_method" value="put" th:if="${community!=null}">
+                                            <input type="hidden" name="CimsShequId" th:if="${community!=null}" th:value="${community.cimsShequId}">
+                                            <div class="form-group">
+                                                <label class="col-xs-12" for="example-text-input">社区名</label>
+                                                <div class="col-xs-4">
+                                                    <input class="form-control" type="text" id="stext" th:value="${community!=null}?${community.cimsShequName}" name="CimsShequName" placeholder="社区名..">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-xs-12">
+                                                    <button class="btn btn-primary" type="submit" th:text="${community!=null}?'修改':'添加'">添加</button>
+                                                    <a class="btn btn-primary" th:href="@{/communities}">返回</a>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            <!--End 页面主要内容-->
+        </div>
+        </div>
+
+        <script type="text/javascript" src="js/jquery.min.js" th:src="@{~/js/jquery.min.js}"></script>
+        <script type="text/javascript" src=".js/bootstrap.min.js" th:src="@{~/js/bootstrap.min.js}"></script>
+        <script type="text/javascript" src=".js/perfect-scrollbar.min.js" th:src="@{~/js/perfect-scrollbar.min.js}"></script>
+        <script type="text/javascript" src="js/main.js" th:src="@{~/js/main.js}"></script>
+        <script type="text/javascript">
+
+            $(".DeleteBtn").click(function () {
+
+                //修改表单地址，即给form添加属性，和上边的del button的th:attr，意义相同 例如xx.attr("action","/emp/id"),然后提交
+                $("#DeleteEmpForm").attr("action",$(this).attr("del_uri")).submit()
+                return false
+            })
+            $(function () {
+                $("#sform").submit(function () {
+
+                    var a=$("#stext").val()
+                    if(a==""){
+
+                        alert("id不能为空！请重新输入")
+                        return false
+                    }
+                    if(a!=""){
+                        return true
+                    }
+                })
+            })
+        </script>
+    </body>
+</html>

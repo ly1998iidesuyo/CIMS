@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!--Begin 左侧导航-->
+<aside class="layout-sidebar" id="aside">
+
+  <!-- logo -->
+<div id="logo" class="sidebar-header">
+  <a href="index.html" th:href="@{/main.html}"><img src="images/logo-sidebar.png" th:src="@{images/logo-sidebar.png}" title="" alt="" /></a>
+</div>
+<div class="layout-sidebar-scroll">
+
+    <nav class="sidebar-main">
+        <ul class="nav nav-drawer">
+            <li class="nav-item"> <a th:href="@{/main.html}">后台管理首页</a> </li>
+            <li class="nav-item"> <a th:href="@{/communities}"> 社区信息</a> </li>
+            <li class="nav-item"> <a th:href="@{/hhregisters}"> 户籍信息</a> </li>
+            <li class="nav-item"> <a th:href="@{/basics}"> 居民基本信息</a> </li>
+            <li class="nav-item"> <a th:href="@{/poorhhs}"> 贫困低保管理</a> </li>
+            <li class="nav-item"> <a th:href="@{/drawrecords}"> 低保领取管理</a> </li>
+            <li class="nav-item"> <a > 党支部信息</a> </li>
+            <li class="nav-item"> <a > 党支部人员管理</a> </li>
+            <li class="nav-item"> <a > 社区治安辖区划分</a> </li>
+            <li class="nav-item"> <a > 治安详情</a> </li>
+            <li class="nav-item"> <a > 外来人员管理</a> </li>
+        </ul>
+    </nav>
+
+  <div class="sidebar-footer">
+    <p class="copyright">Copyright &copy; 2020.  All rights <a href="http://www.bootstrapmb.com/">reserved</a>. </p>
+  </div>
+</div>
+
+</aside>
+<!--End 左侧导航-->
+
+
+<!--头部信息-->
+<header class="layout-header" id="header">
+
+    <nav class="navbar navbar-default">
+        <div class="topbar">
+
+            <div class="topbar-left">
+                <div class="aside-toggler">
+                    <span class="toggler-bar"></span>
+                    <span class="toggler-bar"></span>
+                    <span class="toggler-bar"></span>
+                </div>
+                <span class="navbar-page-title"> 后台首页 </span>
+            </div>
+
+            <ul class="topbar-right">
+                <li class="dropdown dropdown-profile">
+                    <a href="javascript:void(0)" data-toggle="dropdown">
+                        <img class="img-avatar img-avatar-48 m-r-10" src="images/users/avatar.jpg" th:src="@{~/images/users/avatar.jpg}" alt="管理员" />
+                        <span>[[${session.LoginUser}]] <span class="caret"></span></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li> <a href="pages_profile.html"><i class="mdi mdi-account"></i> 个人信息</a> </li>
+                        <li> <a href="pages_edit_pwd.html"><i class="mdi mdi-lock-outline"></i> 修改密码</a> </li>
+                        <li> <a href="javascript:void(0)"><i class="mdi mdi-delete"></i> 清空缓存</a></li>
+                        <li class="divider"></li>
+                        <li> <a href="pages_login.html"><i class="mdi mdi-logout-variant"></i> 退出登录</a> </li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+</header>
+<!--End 头部信息-->
+<script type="text/javascript" src="js/jquery.min.js" th:src="@{~/js/jquery.min.js}"></script>
+<script type="text/javascript" src="js/bootstrap.min.js" th:src="@{~/js/bootstrap.min.js}"></script>
+<script type="text/javascript" src=".js/perfect-scrollbar.min.js" th:src="@{~/.js/perfect-scrollbar.min.js}"></script>
+<script type="text/javascript" src="js/main.js" th:src="@{~/js/main.js}"></script>
+</body>
+</html>

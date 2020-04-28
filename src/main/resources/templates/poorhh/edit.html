@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>修改贫困信息 - 社区信息管理系统</title>
+    <!--<link rel="icon" href="favicon.ico" type="image/ico">-->
+
+
+    <meta name="author" content="yinqi">
+    <link href="css/bootstrap.min.css" th:href="@{~/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="css/materialdesignicons.min.css" th:href="@{~/css/materialdesignicons.min.css}" rel="stylesheet">
+    <link href="css/style.css" th:href="@{~/css/style.css}" rel="stylesheet">
+</head>
+    <body data-logobg="color_8" data-sidebarbg="color_8">
+        <div class="layout-web">
+            <div class="layout-container">
+<!--左侧导航-->
+<aside th:replace="commons/bar::#aside"></aside>
+
+<!--头部信息-->
+<header th:replace="commons/bar::#header"></header>
+
+<!--页面主要内容-->
+
+<main class="layout-content">
+  <div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header"><h4>修改贫困信息</h4></div>
+                <div class="card-body">
+
+                    <form class="form-horizontal" id="pform" action="#" th:action="@{/poorhh}" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="_method"  value="put">
+                        <input type="hidden" name="CimsPinkunId" th:value="${poorhh.CimsPinkunId}">
+                        <div class="form-group">
+                            <label class="col-xs-12" for="example-text-input">户籍id</label>
+                            <div class="col-xs-12">
+                                <input id="stext2" class="form-control" readonly type="text" th:value="${huji.CimsHujiId}"  name="CimsHujiId" placeholder="户籍id..">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-12" for="example-text-input">户主姓名</label>
+                            <div class="col-xs-12">
+                                <input id="stext2" class="form-control" readonly type="text" th:value="${huji.CimsHujiName}"  name="CimsHujiName" placeholder="户主姓名.">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-12" for="example-text-input">年平均收入</label>
+                            <div class="col-xs-12">
+                                <input id="stext3" class="form-control" type="text" th:value="${poorhh.CimsPinkunAvgyearincome}"  name="CimsPinkunAvgyearincome" placeholder="年平均收入..">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-12" for="example-text-input">贫困原因</label>
+                            <div class="col-xs-12">
+                                <input id="stext4" class="form-control" type="text" th:value="${poorhh.CimsPinkunReason}"  name="CimsPinkunReason" placeholder="贫困原因..">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <button class="btn btn-primary" type="submit">修改</button>
+                                <a class="btn btn-primary" th:href="@{/poorhhs}">返回</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="js/jquery.min.js" th:src="@{~/js/jquery.min.js}"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js" th:src="@{~/js/bootstrap.min.js}"></script>
+        <script type="text/javascript" src=".js/perfect-scrollbar.min.js" th:src="@{~/js/perfect-scrollbar.min.js}"></script>
+        <script type="text/javascript" src="js/main.js" th:src="@{~/js/main.js}"></script>
+        <script type="text/javascript">
+
+            $(".DeleteBtn").click(function () {
+
+                //修改表单地址，即给form添加属性，和上边的del button的th:attr，意义相同 例如xx.attr("action","/emp/id"),然后提交
+                $("#DeleteEmpForm").attr("action",$(this).attr("del_uri")).submit()
+                return false
+            })
+            $(function () {
+                $("#pform").submit(function () {
+
+                    var a=$("#stext1").val()
+                    var b=$("#stext2").val()
+                    var c=$("#stext3").val()
+                    var d=$("#stext4").val()
+                    var e=$("#stext5").val()
+                    var f=$("#stext6").val()
+
+                    if(a==""||b==""||c==""||d==""||e==""||f==""){
+
+                        alert("有空值，不能提交！")
+                        return false
+                    }
+                    if(a!=""&&b!=""&&c!=""&&d!=""&&e!=""&&f!=""){
+                        alert("修改成功！")
+                        return true
+                    }
+                })
+            })
+        </script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>居民户籍编辑 - 社区信息管理系统</title>
+    <!--<link rel="icon" href="favicon.ico" type="image/ico">-->
+
+
+    <meta name="author" content="yinqi">
+    <link href="css/bootstrap.min.css" th:href="@{~/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="css/materialdesignicons.min.css" th:href="@{~/css/materialdesignicons.min.css}" rel="stylesheet">
+    <link href="css/style.css" th:href="@{~/css/style.css}" rel="stylesheet">
+</head>
+    <body data-logobg="color_8" data-sidebarbg="color_8">
+        <div class="layout-web">
+            <div class="layout-container">
+<!--左侧导航-->
+<aside th:replace="commons/bar::#aside"></aside>
+
+<!--头部信息-->
+<header th:replace="commons/bar::#header"></header>
+
+<!--页面主要内容-->
+
+<main class="layout-content">
+  <div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header"><h4 th:text="${hregister!=null}?'修改户籍':'添加户籍'">添加户籍</h4></div>
+                <div class="card-body">
+
+                    <form class="form-horizontal" action="#" id="sform" th:action="@{/hregister}" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="_method" value="put" th:if="${hregister!=null}">
+                        <input type="hidden" name="CimsHujiId" th:if="${hregister!=null}" th:value="${hregister.CimsHujiId}">
+                        <div class="form-group">
+                            <label class="col-xs-12" for="example-text-input">户主姓名</label>
+                            <div class="col-xs-12">
+                                <input class="form-control" type="text" id="stext1" th:value="${hregister!=null}?${hregister.CimsHujiName}" name="CimsHujiName" placeholder="姓名..">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-12" for="example-select">所属社区</label>
+                            <div class="col-xs-12">
+                                <select class="form-control" id="stext2" name="cimsShequId" size="1">
+                                    <option th:value="${community.cimsShequId}" th:each="community:${communities}" th:text="${community.cimsShequName}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-12" for="example-text-input">家庭人数</label>
+                            <div class="col-xs-12">
+                                <input class="form-control" type="text" id="stext3" th:value="${hregister!=null}?${hregister.CimsHujiPersonnum}" name="CimsHujiPersonnum" placeholder="家庭人数..">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-12" for="example-text-input">籍贯</label>
+                            <div class="col-xs-12">
+                                <input class="form-control" type="text" id="stext4" th:value="${hregister!=null}?${hregister.CimsHujiAdress}" name="CimsHujiAdress" placeholder="籍贯..">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-12" for="example-text-input">联系方式</label>
+                            <div class="col-xs-12">
+                                <input class="form-control" type="text" id="stext5" th:value="${hregister!=null}?${hregister.CimsHujiPhone}" name="CimsHujiPhone" placeholder="联系方式..">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-12" for="example-text-input">住址</label>
+                            <div class="col-xs-12">
+                                <input class="form-control" type="text" id="stext6" th:value="${hregister!=null}?${hregister.CimsHujiAdressnow}" name="CimsHujiAdressnow" placeholder="住址..">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <button class="btn btn-primary" type="submit" th:text="${hregister!=null}?'修改':'添加'">添加</button>
+                                <a class="btn btn-primary" th:href="@{/hhregisters}">返回</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="js/jquery.min.js" th:src="@{~/js/jquery.min.js}"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js" th:src="@{~/js/bootstrap.min.js}"></script>
+        <script type="text/javascript" src=".js/perfect-scrollbar.min.js" th:src="@{~/js/perfect-scrollbar.min.js}"></script>
+        <script type="text/javascript" src="js/main.js" th:src="@{~/js/main.js}"></script>
+        <script type="text/javascript">
+
+            $(".DeleteBtn").click(function () {
+
+                //修改表单地址，即给form添加属性，和上边的del button的th:attr，意义相同 例如xx.attr("action","/emp/id"),然后提交
+                $("#DeleteEmpForm").attr("action",$(this).attr("del_uri")).submit()
+                return false
+            })
+            $(function () {
+                $("#sform").submit(function () {
+
+                    var a=$("#stext1").val()
+                    var b=$("#stext2").val()
+                    var c=$("#stext3").val()
+                    var d=$("#stext4").val()
+                    var e=$("#stext5").val()
+                    var f=$("#stext6").val()
+
+
+                    if(a==""||b==""||c==""||d==""||e==""||f==""){
+
+                        alert("有空值，不能提交！")
+                        return false
+                    }
+                    if(a!=""&&b!=""&&c!=""&&d!=""&&e!=""&&f!=""){
+                        return true
+                    }
+                })
+            })
+        </script>
+</body>
+</html>
